@@ -104,12 +104,12 @@ namespace CASCHost
 			if (!Uri.IsWellFormedUriString(Settings.PatchUrl, UriKind.Absolute))
 			{
 				Logger.LogCritical("Malformed Patch Url.");
-				exit = true;
+			//	exit = true;
 			}
 			else if (!PingPatchUrl())
 			{
 				Logger.LogCritical("Unreachable Patch Url.");
-				exit = true;
+			//exit = true;
 			}
 
 			if (exit)
@@ -125,7 +125,7 @@ namespace CASCHost
 			try
 			{
 				using (var clientHandler = new HttpClientHandler() { AllowAutoRedirect = false })
-				using (var webRequest = new HttpClient(clientHandler) { Timeout = TimeSpan.FromSeconds(3) })
+				using (var webRequest = new HttpClient(clientHandler) { Timeout = TimeSpan.FromSeconds(100) })
 				using (var request = new HttpRequestMessage(HttpMethod.Head, Settings.PatchUrl + "/versions"))
 				using (var response = webRequest.SendAsync(request).Result)
 					return response.StatusCode == HttpStatusCode.OK;
